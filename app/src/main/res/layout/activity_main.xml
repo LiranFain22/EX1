@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/MainActivity_Img_Ninja"
         android:layout_width="91dp"
         android:layout_height="109dp"
         android:layout_marginEnd="20dp"
@@ -39,4 +39,92 @@
         app:layout_constraintBottom_toTopOf="@+id/MainActivity_IMG_SpiderMan"
         app:layout_constraintEnd_toEndOf="@+id/MainActivity_IMG_SpiderMan"
         app:layout_constraintStart_toStartOf="@+id/MainActivity_IMG_SpiderMan" />
+
+    <ProgressBar
+        android:id="@+id/ninja_progressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="91dp"
+        android:layout_height="10dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/MainActivity_Img_Ninja"
+        app:layout_constraintEnd_toEndOf="@+id/MainActivity_Img_Ninja"
+        app:layout_constraintStart_toStartOf="@+id/MainActivity_Img_Ninja" />
+
+    <Button
+        android:id="@+id/MainActivity_Btn_Att1_spiderMan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/button_background_1"
+        android:text="Punch !"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/MainActivity_IMG_SpiderMan"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/MainActivity_Btn_Att2_spiderMan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/button_background_1"
+        android:text="kick !"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/MainActivity_IMG_SpiderMan"
+        app:layout_constraintTop_toBottomOf="@+id/MainActivity_Btn_Att1_spiderMan" />
+
+    <Button
+        android:id="@+id/MainActivity_Btn_Att3_spiderMan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/button_background_1"
+        android:text="web !"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/MainActivity_IMG_SpiderMan"
+        app:layout_constraintTop_toBottomOf="@+id/MainActivity_Btn_Att2_spiderMan" />
+
+    <Button
+        android:id="@+id/MainActivity_Btn_Att1_Ninja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="20dp"
+        android:text="punch !"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background_2"
+        app:layout_constraintEnd_toStartOf="@+id/MainActivity_Img_Ninja"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/MainActivity_Btn_Att2_Ninja"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="20dp"
+        android:text="kick !"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background_2"
+        app:layout_constraintEnd_toStartOf="@+id/MainActivity_Img_Ninja"
+        app:layout_constraintTop_toBottomOf="@+id/MainActivity_Btn_Att1_Ninja" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/button_background_2"
+        android:text="star !"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/MainActivity_Img_Ninja"
+        app:layout_constraintTop_toBottomOf="@+id/MainActivity_Btn_Att2_Ninja" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
