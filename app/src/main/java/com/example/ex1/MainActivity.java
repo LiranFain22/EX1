@@ -53,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
                     
     }
 
+    /**
+     * Checking if Health of SpiderMan and Ninja is under 40
+     * if true, making the progress bar color RED
+     * otherwise, keeping the progress bar color GREEN
+     */
     private void updateProgressBar() {
                     if(turn % 2 != 0 && ninjaHealth <= 40){ // SpiderMan Turn
                         main_PB_ninja.getProgressDrawable().setColorFilter(Color.RED , PorterDuff.Mode.MULTIPLY);
@@ -124,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
                     gameOver(message,progressBar);
     }
 
+    /**
+     * The method disable all buttons and show message of the winning player
+     */
     private void gameOver(String message, ProgressBar progressBar) {
 
         main_BTN_spidermanAtt1.setEnabled(false);
@@ -155,6 +163,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method enable the buttons for the player,
+     * depends on the turn
+     */
     private void turns() {
             if(turn % 2 != 0){ // spiderMan turn
                 main_BTN_spidermanAtt1.setEnabled(true);
