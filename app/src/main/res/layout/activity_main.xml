@@ -7,6 +7,18 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/MainActivity_ANIMATION_flipCoin"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/MainActivity_Btn_Att1_Ninja"
+        app:layout_constraintStart_toEndOf="@+id/MainActivity_Btn_Att1_spiderMan"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="false"
+        app:lottie_repeatCount="1"
+        app:lottie_fileName="flip_coin.json"
+        app:lottie_loop="true" />
 
     <ImageView
         android:id="@+id/MainActivity_IMG_SpiderMan"
@@ -29,6 +41,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/MainActivity_IMG_arrow"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/MainActivity_Btn_Att2_Ninja"
+        app:layout_constraintStart_toEndOf="@+id/MainActivity_Btn_Att2_spiderMan"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ProgressBar
         android:id="@+id/spiderMan_progressBar"
@@ -130,6 +152,20 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/MainActivity_Img_Ninja" />
+
+    <Button
+        android:id="@+id/MainActivity_Btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/button_background_start"
+        android:tag="start !"
+        android:text="Start!"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/MainActivity_Btn_Att3_Ninja"
+        app:layout_constraintStart_toEndOf="@+id/MainActivity_Btn_Att3_spiderMan"
+        app:layout_constraintTop_toBottomOf="@+id/MainActivity_IMG_arrow" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
