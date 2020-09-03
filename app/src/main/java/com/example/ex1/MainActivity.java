@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int LARGE_ATTACK = 30;
 
     private View.OnClickListener buttonClickListener;
+
     /*
         if turn is even - ninja turn
         else - spiderMan turn
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public static final Random RANDOM = new Random();
 
     private ImageView main_IMG_arrow;
+
     private LottieAnimationView main_ANIMATION_flipCoin;
 
     private Button main_BTN_start;
@@ -150,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void damageAndMessage(int attack, String message, ProgressBar progressBar) {
                     if(turn % 2 != 0){ // SpiderMan attack
