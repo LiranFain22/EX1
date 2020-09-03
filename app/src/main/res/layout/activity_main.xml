@@ -159,13 +159,37 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:background="@drawable/button_background_start"
-        android:tag="start !"
-        android:text="Start!"
+        android:tag="flip !"
+        android:text="Flip!"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/MainActivity_Btn_Att3_Ninja"
         app:layout_constraintStart_toEndOf="@+id/MainActivity_Btn_Att3_spiderMan"
         app:layout_constraintTop_toBottomOf="@+id/MainActivity_IMG_arrow" />
+
+    <TextView
+        android:id="@+id/MainActivity_TXT_SpiderManText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textColor="#0E0000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/MainActivity_IMG_SpiderMan"
+        app:layout_constraintStart_toStartOf="@+id/MainActivity_IMG_SpiderMan"
+        app:layout_constraintTop_toBottomOf="@+id/MainActivity_IMG_SpiderMan" />
+
+    <TextView
+        android:id="@+id/MainActivity_TXT_NinjaText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textColor="#0E0000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/MainActivity_Img_Ninja"
+        app:layout_constraintStart_toStartOf="@+id/MainActivity_Img_Ninja"
+        app:layout_constraintTop_toBottomOf="@+id/MainActivity_Img_Ninja" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

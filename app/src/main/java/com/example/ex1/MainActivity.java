@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -54,8 +55,12 @@ public class MainActivity extends AppCompatActivity {
     private LottieAnimationView main_ANIMATION_flipCoin;
 
     private Button main_BTN_start;
-                @Override
-                protected void onCreate(Bundle savedInstanceState) {
+
+    private TextView main_TXT_SpiderManText;
+    private TextView main_TXT_NinjaText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
                     super.onCreate(savedInstanceState);
                     setContentView(R.layout.activity_main);
 
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String tag = (String) view.getTag();
 
-                if(tag.equals("start !")){
+                if(tag.equals("flip !")){
                     flipCoin();
                 }
             }
@@ -184,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
         main_BTN_ninjaAtt2.setEnabled(false);
         main_BTN_ninjaAtt3.setEnabled(false);
 
-
+        main_TXT_SpiderManText.setText("");
+        main_TXT_NinjaText.setText("");
     }
 
     private void initializeGame() {
@@ -251,20 +257,32 @@ public class MainActivity extends AppCompatActivity {
     private void randomAttack() {
         int chooseAttack = RANDOM.nextInt(3);
         if(turn % 2 != 0){ // SpiderMan turn
-            if(chooseAttack == 0)
+            if(chooseAttack == 0) {
                 damageAndMessage(SMALL_ATTACK, "SpiderMan Won!", main_PB_ninja);
-            if(chooseAttack == 1)
+                main_TXT_SpiderManText.setText("Punch!");
+            }
+            if(chooseAttack == 1) {
                 damageAndMessage(MEDIUM_ATTACK, "SpiderMan Won!", main_PB_ninja);
-            if(chooseAttack == 2)
+                main_TXT_SpiderManText.setText("Kick!");
+            }
+            if(chooseAttack == 2) {
                 damageAndMessage(LARGE_ATTACK, "SpiderMan Won!", main_PB_ninja);
+                main_TXT_SpiderManText.setText("Web!");
+            }
         }
         else{
-            if(chooseAttack == 0)
+            if(chooseAttack == 0) {
                 damageAndMessage(SMALL_ATTACK, "Ninja Won!", main_PB_spiderman);
-            if(chooseAttack == 1)
+                main_TXT_NinjaText.setText("Punch!");
+            }
+            if(chooseAttack == 1) {
                 damageAndMessage(MEDIUM_ATTACK, "Ninja Won!", main_PB_spiderman);
-            if(chooseAttack == 2)
+                main_TXT_NinjaText.setText("Kick!");
+            }
+            if(chooseAttack == 2) {
                 damageAndMessage(LARGE_ATTACK, "Ninja Won!", main_PB_spiderman);
+                main_TXT_NinjaText.setText("Star!");
+            }
         }
         updateProgressBar();
     }
@@ -292,5 +310,9 @@ public class MainActivity extends AppCompatActivity {
 
         //------------------- Flip coin Animation -------------------------//
         main_ANIMATION_flipCoin = findViewById(R.id.MainActivity_ANIMATION_flipCoin);
+
+        //------------------- Text for SpiderMan & Ninja Attack -------------------------//
+        main_TXT_SpiderManText = (TextView) findViewById(R.id.MainActivity_TXT_SpiderManText);
+        main_TXT_NinjaText = (TextView) findViewById(R.id.MainActivity_TXT_NinjaText);
     }
 }
