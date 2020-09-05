@@ -29,7 +29,7 @@ public class Result_Activity extends AppCompatActivity {
         /*
         TODO -
             1. add two buttons: "menu" and "Top10"
-            2.
+            2. make "top10" fragment
          */
     }
 
