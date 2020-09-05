@@ -19,6 +19,8 @@ public class Result_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         findViews();
+
+        // TODO - Find a way to transfer data result from MainActivity to ResultActivity
     }
 
     private void findViews() {
