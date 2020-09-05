@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView main_TXT_SpiderManText;
     private TextView main_TXT_NinjaText;
 
+    int spiderManCounterMoves = 0;
+    int ninjaCounterMoves = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
                     super.onCreate(savedInstanceState);
@@ -113,13 +116,33 @@ public class MainActivity extends AppCompatActivity {
 
                 if(tag.equals("flip !"))
                     flipCoin();
-                if(tag.equals("result")){
-                    Intent i = new Intent(getApplicationContext(),Result_Activity.class);
-                    startActivity(i);
-                    finish();
-                }
+                if(tag.equals("result"))
+                    moveToResult();
             }
         };
+    }
+
+    /**
+     * This method activated when "Result" button clicked
+     * transfer winner data to Result Activity
+     */
+    private void moveToResult() {
+        if(main_PB_spiderman.getProgress() == 0){
+            String winner = "Ninja";
+            Intent i = new Intent(getApplicationContext(),Result_Activity.class);
+            i.putExtra("winner",winner);
+            i.putExtra("movesCounter",ninjaCounterMoves);
+            startActivity(i);
+            finish();
+        }
+        if(main_PB_ninja.getProgress() == 0){
+            String winner = "SpiderMan";
+            Intent i = new Intent(getApplicationContext(),Result_Activity.class);
+            i.putExtra("winner",winner);
+            i.putExtra("movesCounter",spiderManCounterMoves);
+            startActivity(i);
+            finish();
+        }
     }
 
     private void startGame() {
@@ -236,6 +259,8 @@ public class MainActivity extends AppCompatActivity {
                 main_BTN_ninjaAtt2.setEnabled(false);
                 main_BTN_ninjaAtt3.setEnabled(false);
 
+                spiderManCounterMoves++;
+
                 final Handler handler = new Handler();
                 final int delay = 2000; //milliseconds
                 handler.postDelayed(new Runnable(){
@@ -253,6 +278,8 @@ public class MainActivity extends AppCompatActivity {
                 main_BTN_ninjaAtt1.setEnabled(true);
                 main_BTN_ninjaAtt2.setEnabled(true);
                 main_BTN_ninjaAtt3.setEnabled(true);
+
+                ninjaCounterMoves++;
 
                 final Handler handler = new Handler();
                 final int delay = 2000; //milliseconds
