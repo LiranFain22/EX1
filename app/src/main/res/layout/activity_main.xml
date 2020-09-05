@@ -167,6 +167,19 @@
         app:layout_constraintStart_toEndOf="@+id/MainActivity_Btn_Att3_spiderMan"
         app:layout_constraintTop_toBottomOf="@+id/MainActivity_IMG_arrow" />
 
+    <Button
+        android:id="@+id/MainActivity_Btn_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:tag="result"
+        android:text="result"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background_start"/>
+
     <TextView
         android:id="@+id/MainActivity_TXT_SpiderManText"
         android:layout_width="wrap_content"

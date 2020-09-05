@@ -3,6 +3,7 @@ package com.example.ex1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private LottieAnimationView main_ANIMATION_flipCoin;
 
     private Button main_BTN_start;
+    private Button main_BTN_result;
 
     private TextView main_TXT_SpiderManText;
     private TextView main_TXT_NinjaText;
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     main_BTN_ninjaAtt3.setOnClickListener(buttonClickListener);
 
                     main_BTN_start.setOnClickListener(buttonClickListener);
+                    main_BTN_result.setOnClickListener(buttonClickListener);
     }
 
     private void setListener() {
@@ -108,8 +111,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String tag = (String) view.getTag();
 
-                if(tag.equals("flip !")){
+                if(tag.equals("flip !"))
                     flipCoin();
+                if(tag.equals("result")){
+                    Intent i = new Intent(getApplicationContext(),Result_Activity.class);
+                    startActivity(i);
+                    finish();
                 }
             }
         };
@@ -175,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
                     main_IMG_arrow.setVisibility(View.INVISIBLE);
                     Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                     gameOver();
+                    main_BTN_result.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -204,6 +212,8 @@ public class MainActivity extends AppCompatActivity {
 
         main_PB_ninja.getProgressDrawable().setColorFilter(Color.GREEN , PorterDuff.Mode.MULTIPLY);
         main_PB_spiderman.getProgressDrawable().setColorFilter(Color.GREEN , PorterDuff.Mode.MULTIPLY);
+
+        main_BTN_result.setVisibility(View.INVISIBLE);
 
         // Calling to this method, before clicking on "start" button
         gameOver();
@@ -315,5 +325,8 @@ public class MainActivity extends AppCompatActivity {
         //------------------- Text for SpiderMan & Ninja Attack -------------------------//
         main_TXT_SpiderManText = (TextView) findViewById(R.id.MainActivity_TXT_SpiderManText);
         main_TXT_NinjaText = (TextView) findViewById(R.id.MainActivity_TXT_NinjaText);
+
+        //------------------- Button for result -------------------------//
+        main_BTN_result = findViewById(R.id.MainActivity_Btn_result);
     }
 }

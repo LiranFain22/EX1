@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Start_Activity"
+        <activity android:name=".Result_Activity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".Start_Activity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape">
             <intent-filter>
