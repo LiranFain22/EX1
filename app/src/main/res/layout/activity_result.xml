@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="200dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="30sp"
+        android:layout_marginTop="70dp"
         android:text="Winner :"
         android:textColor="#000000"
         android:textSize="15sp"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="72dp"
         android:layout_marginEnd="200dp"
         android:layout_marginRight="200dp"
         android:text="TextView"
@@ -77,37 +77,32 @@
         app:layout_constraintStart_toEndOf="@+id/RESULT_LBL_movesTitle"
         app:layout_constraintTop_toBottomOf="@+id/RESULT_LBL_playerName" />
 
-    <TextView
-        android:id="@+id/RESULT_LBL_timerTitle"
+    <Button
+        android:id="@+id/RESULT_BTN_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="40dp"
-        android:text="Time :"
-        android:textColor="#000000"
+        android:text="menu"
+        android:textColor="#FFFFFF"
+        android:tag="menu"
+        android:background="@drawable/button_background_start"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/RESULT_BTN_Top10"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RESULT_LBL_movesTitle"
-        app:layout_constraintVertical_bias="0.098" />
+        app:layout_constraintTop_toBottomOf="@+id/RESULT_LBL_movesTitle" />
 
-    <TextView
-        android:id="@+id/RESULT_LBL_timeCounter"
+    <Button
+        android:id="@+id/RESULT_BTN_Top10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="200dp"
         android:layout_marginRight="200dp"
-        android:text="TextView"
-        android:textColor="#000000"
+        android:text="Top10"
+        android:textColor="#FFFFFF"
+        android:tag="top10"
+        android:background="@drawable/button_background_start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.94"
-        app:layout_constraintStart_toEndOf="@+id/RESULT_LBL_timerTitle"
-        app:layout_constraintTop_toBottomOf="@+id/RESULT_LBL_numberOfMoves"
-        app:layout_constraintVertical_bias="0.11" />
+        app:layout_constraintTop_toBottomOf="@+id/RESULT_LBL_numberOfMoves" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
