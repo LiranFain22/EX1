@@ -2,12 +2,20 @@ package com.example.ex1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -205,7 +217,28 @@ public class MainActivity extends AppCompatActivity {
                     main_IMG_arrow.setVisibility(View.INVISIBLE);
                     Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                     gameOver();
+                    //send winner string, how many steps and location
+                    if(main_PB_spiderman.getProgress() == 0)
+                        saveWinner("Ninja",ninjaCounterMoves,getLocation());
+                    saveWinner("SpiderMan",spiderManCounterMoves,getLocation());
                     main_BTN_result.setVisibility(View.VISIBLE);
+    }
+
+    private void saveWinner(String winnerName, int counterMoves, Location location){
+        SharedPreferences appSharedPrefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Winner>>(){}.getType();
+        //get the arrayList of winners
+        String json = appSharedPrefs.getString("MyWinner", "");
+        List<Winner> winnerArrayList = gson.fromJson(json, type);
+        //add a new winner to arrayList of winners
+        Winner winner = new Winner(winnerName,counterMoves,location);
+        //save the modified arrayList of winners to sharedPreference
+        winnerArrayList.add(winner);
+        String newJson = gson.toJson(winnerArrayList);
+        prefsEditor.putString("MyWinner", newJson);
+        prefsEditor.apply();
     }
 
     /**
@@ -323,6 +356,27 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         updateProgressBar();
+    }
+
+    public Location getLocation() {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return null;
+        }
+        Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (myLocation == null)
+        {
+            myLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+
+        }
+        return myLocation;
     }
 
     private void findView() {

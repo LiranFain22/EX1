@@ -37,14 +37,14 @@
         app:layout_constraintTop_toBottomOf="@+id/StartActivity_TXT_titleGame" />
 
     <Button
-        android:id="@+id/StartActivity_BTN_records"
+        android:id="@+id/StartActivity_BTN_top10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="150dp"
         android:layout_marginRight="150dp"
         android:background="@drawable/button_background_start"
-        android:text="Records"
-        android:tag="records"
+        android:text="Top10"
+        android:tag="top10"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
