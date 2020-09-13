@@ -10,16 +10,6 @@
         android:gravity="center_horizontal"
         android:background="@color/background">
 
-        <TextView
-            android:id="@+id/map_LBL_info"
-            android:layout_width="wrap_content"
-            android:layout_height="116dp"
-            android:layout_margin="10sp"
-            android:layout_weight="1"
-            android:text="- - - -"
-            android:textColor="#0B0000"
-            android:textSize="30sp" />
-
         <com.google.android.gms.maps.MapView
             android:id="@+id/map_mapView"
             android:layout_width="match_parent"

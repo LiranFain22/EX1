@@ -45,7 +45,7 @@ public class Fragment_Map extends Fragment {
     }
 
     private void findView(View view) {
-        map_LBL_info = view.findViewById(R.id.map_LBL_info);
+        //map_LBL_info = view.findViewById(R.id.map_LBL_info);
     }
 
     @Override

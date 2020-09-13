@@ -22,7 +22,6 @@ public class Top10 extends AppCompatActivity {
 
     private Fragment_List fragment_list;
     private Fragment_Map fragment_map;
-    private ArrayList<Winner> winnerArrayList;
 
     private Button top10_BTN_main;
 
@@ -36,20 +35,12 @@ public class Top10 extends AppCompatActivity {
         initFragments();
         findViews();
         setListener();
-        initWinners();
 
 
         top10_BTN_main.setOnClickListener(buttonClickListener);
     }
 
-    private void initWinners() {
-        SharedPreferences appSharedPrefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<Winner>>(){}.getType();
-        //get the arrayList of winners
-        String json = appSharedPrefs.getString("MyWinner", "");
-        List<Winner> winnerArrayList = gson.fromJson(json, type);
-    }
+
 
     private void setListener() {
         buttonClickListener = new View.OnClickListener() {

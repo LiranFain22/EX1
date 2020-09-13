@@ -29,6 +29,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -231,7 +232,12 @@ public class MainActivity extends AppCompatActivity {
         Type type = new TypeToken<List<Winner>>(){}.getType();
         //get the arrayList of winners
         String json = appSharedPrefs.getString("MyWinner", "");
-        List<Winner> winnerArrayList = gson.fromJson(json, type);
+        ArrayList<Winner> winnerArrayList;
+        if(json.equals("")){
+             winnerArrayList = new ArrayList<>();
+        }else {
+            winnerArrayList = gson.fromJson(json, type);
+        }
         //add a new winner to arrayList of winners
         Winner winner = new Winner(winnerName,counterMoves,location);
         //save the modified arrayList of winners to sharedPreference
