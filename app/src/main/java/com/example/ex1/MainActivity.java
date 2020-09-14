@@ -16,6 +16,7 @@ import android.os.Handler;
 
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -79,21 +83,26 @@ public class MainActivity extends AppCompatActivity {
     int spiderManCounterMoves = 0;
     int ninjaCounterMoves = 0;
 
+    private FusedLocationProviderClient fusedLocationProviderClient;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-                    super.onCreate(savedInstanceState);
-                    setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-                    findView();
+        findView();
 
-                    initializeGame();
-                    
-                    setListener();
-                    
-                    setButtons();
-                    
-                    
+        initializeGame();
+
+        setListener();
+
+        setButtons();
+
+
     }
+
+
 
     /**
      * Checking if Health of SpiderMan and Ninja is under 40
@@ -101,24 +110,23 @@ public class MainActivity extends AppCompatActivity {
      * otherwise, keeping the progress bar color GREEN
      */
     private void updateProgressBar() {
-                    if(turn % 2 != 0 && ninjaHealth <= 40){ // SpiderMan Turn
-                        main_PB_ninja.getProgressDrawable().setColorFilter(Color.RED , PorterDuff.Mode.MULTIPLY);
-                    }
-                    else if(turn % 2 == 0 && spiderManHealth <= 40){ // Ninja turn
-                        main_PB_spiderman.getProgressDrawable().setColorFilter(Color.RED , PorterDuff.Mode.MULTIPLY);
-                    }
+        if (turn % 2 != 0 && ninjaHealth <= 40) { // SpiderMan Turn
+            main_PB_ninja.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+        } else if (turn % 2 == 0 && spiderManHealth <= 40) { // Ninja turn
+            main_PB_spiderman.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+        }
     }
 
     private void setButtons() {
-                    main_BTN_spidermanAtt1.setOnClickListener(buttonClickListener);
-                    main_BTN_spidermanAtt2.setOnClickListener(buttonClickListener);
-                    main_BTN_spidermanAtt3.setOnClickListener(buttonClickListener);
-                    main_BTN_ninjaAtt1.setOnClickListener(buttonClickListener);
-                    main_BTN_ninjaAtt2.setOnClickListener(buttonClickListener);
-                    main_BTN_ninjaAtt3.setOnClickListener(buttonClickListener);
+        main_BTN_spidermanAtt1.setOnClickListener(buttonClickListener);
+        main_BTN_spidermanAtt2.setOnClickListener(buttonClickListener);
+        main_BTN_spidermanAtt3.setOnClickListener(buttonClickListener);
+        main_BTN_ninjaAtt1.setOnClickListener(buttonClickListener);
+        main_BTN_ninjaAtt2.setOnClickListener(buttonClickListener);
+        main_BTN_ninjaAtt3.setOnClickListener(buttonClickListener);
 
-                    main_BTN_start.setOnClickListener(buttonClickListener);
-                    main_BTN_result.setOnClickListener(buttonClickListener);
+        main_BTN_start.setOnClickListener(buttonClickListener);
+        main_BTN_result.setOnClickListener(buttonClickListener);
     }
 
     private void setListener() {
@@ -127,9 +135,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String tag = (String) view.getTag();
 
-                if(tag.equals("flip !"))
+                if (tag.equals("flip !"))
                     flipCoin();
-                if(tag.equals("result"))
+                if (tag.equals("result"))
                     moveToResult();
             }
         };
@@ -140,19 +148,19 @@ public class MainActivity extends AppCompatActivity {
      * transfer winner data to Result Activity
      */
     private void moveToResult() {
-        if(main_PB_spiderman.getProgress() == 0){
+        if (main_PB_spiderman.getProgress() == 0) {
             String winner = "Ninja";
-            Intent i = new Intent(getApplicationContext(),Result_Activity.class);
-            i.putExtra("winner",winner);
-            i.putExtra("movesCounter",ninjaCounterMoves);
+            Intent i = new Intent(getApplicationContext(), Result_Activity.class);
+            i.putExtra("winner", winner);
+            i.putExtra("movesCounter", ninjaCounterMoves);
             startActivity(i);
             finish();
         }
-        if(main_PB_ninja.getProgress() == 0){
+        if (main_PB_ninja.getProgress() == 0) {
             String winner = "SpiderMan";
-            Intent i = new Intent(getApplicationContext(),Result_Activity.class);
-            i.putExtra("winner",winner);
-            i.putExtra("movesCounter",spiderManCounterMoves);
+            Intent i = new Intent(getApplicationContext(), Result_Activity.class);
+            i.putExtra("winner", winner);
+            i.putExtra("movesCounter", spiderManCounterMoves);
             startActivity(i);
             finish();
         }
@@ -174,13 +182,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationStart(Animator animator) {
                 //main_ANIMATION_flipCoin.setVisibility(View.VISIBLE);
-                Log.d("pttt","Animation START");
+                Log.d("pttt", "Animation START");
             }
 
             @Override
             public void onAnimationEnd(Animator animator) {
                 main_ANIMATION_flipCoin.setVisibility(View.GONE);
-                Log.d("pttt","Animation GONE");
+                Log.d("pttt", "Animation GONE");
                 startGame();
             }
 
@@ -197,49 +205,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void damageAndMessage(int attack, String message, ProgressBar progressBar) {
-                    if(turn % 2 != 0){ // SpiderMan attack
-                        if((ninjaHealth - attack) > 0){
-                            ninjaHealth -= attack;
-                            progressBar.setProgress(ninjaHealth);
-                            turn++;
-                            makeTurn();
-                            return;
-                        }
-                    }else{
-                        if((spiderManHealth - attack) > 0){
-                            spiderManHealth -= attack;
-                            progressBar.setProgress(spiderManHealth);
-                            turn++;
-                            makeTurn();
-                            return;
-                        }
-                    }
-                    progressBar.setProgress(0);
-                    main_IMG_arrow.setVisibility(View.INVISIBLE);
-                    Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-                    gameOver();
-                    //send winner string, how many steps and location
-                    if(main_PB_spiderman.getProgress() == 0)
-                        saveWinner("Ninja",ninjaCounterMoves,getLocation());
-                    saveWinner("SpiderMan",spiderManCounterMoves,getLocation());
-                    main_BTN_result.setVisibility(View.VISIBLE);
+        if (turn % 2 != 0) { // SpiderMan attack
+            if ((ninjaHealth - attack) > 0) {
+                ninjaHealth -= attack;
+                progressBar.setProgress(ninjaHealth);
+                turn++;
+                makeTurn();
+                return;
+            }
+        } else {
+            if ((spiderManHealth - attack) > 0) {
+                spiderManHealth -= attack;
+                progressBar.setProgress(spiderManHealth);
+                turn++;
+                makeTurn();
+                return;
+            }
+        }
+        progressBar.setProgress(0);
+        main_IMG_arrow.setVisibility(View.INVISIBLE);
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+        gameOver();
+        //send winner string, how many steps and location
+        getLocation(main_PB_spiderman.getProgress() == 0);
+        main_BTN_result.setVisibility(View.VISIBLE);
     }
 
-    private void saveWinner(String winnerName, int counterMoves, Location location){
+    private void saveWinner(String winnerName, int counterMoves, Location location) {
         SharedPreferences appSharedPrefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Winner>>(){}.getType();
+        Type type = new TypeToken<List<Winner>>() {
+        }.getType();
         //get the arrayList of winners
         String json = appSharedPrefs.getString("MyWinner", "");
         ArrayList<Winner> winnerArrayList;
-        if(json.equals("")){
-             winnerArrayList = new ArrayList<>();
-        }else {
+        if (json.equals("")) {
+            winnerArrayList = new ArrayList<>();
+        } else {
             winnerArrayList = gson.fromJson(json, type);
         }
         //add a new winner to arrayList of winners
-        Winner winner = new Winner(winnerName,counterMoves,location);
+        Winner winner = new Winner(winnerName, counterMoves, location);
         //save the modified arrayList of winners to sharedPreference
         winnerArrayList.add(winner);
         String newJson = gson.toJson(winnerArrayList);
@@ -272,8 +279,8 @@ public class MainActivity extends AppCompatActivity {
         main_PB_spiderman.setProgress(spiderManHealth);
         main_PB_ninja.setProgress(ninjaHealth);
 
-        main_PB_ninja.getProgressDrawable().setColorFilter(Color.GREEN , PorterDuff.Mode.MULTIPLY);
-        main_PB_spiderman.getProgressDrawable().setColorFilter(Color.GREEN , PorterDuff.Mode.MULTIPLY);
+        main_PB_ninja.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
+        main_PB_spiderman.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
 
         main_BTN_result.setVisibility(View.INVISIBLE);
 
@@ -288,75 +295,74 @@ public class MainActivity extends AppCompatActivity {
      * depends on the turn
      */
     private void makeTurn() {
-            if(turn % 2 != 0){ // spiderMan turn
-                main_IMG_arrow.setImageResource(R.drawable.left_arrow);
+        if (turn % 2 != 0) { // spiderMan turn
+            main_IMG_arrow.setImageResource(R.drawable.left_arrow);
 
-                main_BTN_spidermanAtt1.setEnabled(true);
-                main_BTN_spidermanAtt2.setEnabled(true);
-                main_BTN_spidermanAtt3.setEnabled(true);
-                main_BTN_ninjaAtt1.setEnabled(false);
-                main_BTN_ninjaAtt2.setEnabled(false);
-                main_BTN_ninjaAtt3.setEnabled(false);
+            main_BTN_spidermanAtt1.setEnabled(true);
+            main_BTN_spidermanAtt2.setEnabled(true);
+            main_BTN_spidermanAtt3.setEnabled(true);
+            main_BTN_ninjaAtt1.setEnabled(false);
+            main_BTN_ninjaAtt2.setEnabled(false);
+            main_BTN_ninjaAtt3.setEnabled(false);
 
-                spiderManCounterMoves++;
+            spiderManCounterMoves++;
 
-                final Handler handler = new Handler();
-                final int delay = 2000; //milliseconds
-                handler.postDelayed(new Runnable(){
-                    public void run(){
-                        randomAttack();
-                        //handler.postDelayed(this, delay);
-                    }
-                }, delay);
-            }else{           // ninja turn
-                main_IMG_arrow.setImageResource(R.drawable.right_arrow);
+            final Handler handler = new Handler();
+            final int delay = 2000; //milliseconds
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    randomAttack();
+                    //handler.postDelayed(this, delay);
+                }
+            }, delay);
+        } else {           // ninja turn
+            main_IMG_arrow.setImageResource(R.drawable.right_arrow);
 
-                main_BTN_spidermanAtt1.setEnabled(false);
-                main_BTN_spidermanAtt2.setEnabled(false);
-                main_BTN_spidermanAtt3.setEnabled(false);
-                main_BTN_ninjaAtt1.setEnabled(true);
-                main_BTN_ninjaAtt2.setEnabled(true);
-                main_BTN_ninjaAtt3.setEnabled(true);
+            main_BTN_spidermanAtt1.setEnabled(false);
+            main_BTN_spidermanAtt2.setEnabled(false);
+            main_BTN_spidermanAtt3.setEnabled(false);
+            main_BTN_ninjaAtt1.setEnabled(true);
+            main_BTN_ninjaAtt2.setEnabled(true);
+            main_BTN_ninjaAtt3.setEnabled(true);
 
-                ninjaCounterMoves++;
+            ninjaCounterMoves++;
 
-                final Handler handler = new Handler();
-                final int delay = 2000; //milliseconds
-                handler.postDelayed(new Runnable(){
-                    public void run(){
-                        randomAttack();
-                        //handler.postDelayed(this, delay);
-                    }
-                }, delay);
-            }
+            final Handler handler = new Handler();
+            final int delay = 2000; //milliseconds
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    randomAttack();
+                    //handler.postDelayed(this, delay);
+                }
+            }, delay);
+        }
     }
 
     private void randomAttack() {
         int chooseAttack = RANDOM.nextInt(3);
-        if(turn % 2 != 0){ // SpiderMan turn
-            if(chooseAttack == 0) {
+        if (turn % 2 != 0) { // SpiderMan turn
+            if (chooseAttack == 0) {
                 damageAndMessage(SMALL_ATTACK, "SpiderMan Won!", main_PB_ninja);
                 main_TXT_SpiderManText.setText("Punch!");
             }
-            if(chooseAttack == 1) {
+            if (chooseAttack == 1) {
                 damageAndMessage(MEDIUM_ATTACK, "SpiderMan Won!", main_PB_ninja);
                 main_TXT_SpiderManText.setText("Kick!");
             }
-            if(chooseAttack == 2) {
+            if (chooseAttack == 2) {
                 damageAndMessage(LARGE_ATTACK, "SpiderMan Won!", main_PB_ninja);
                 main_TXT_SpiderManText.setText("Web!");
             }
-        }
-        else{
-            if(chooseAttack == 0) {
+        } else {
+            if (chooseAttack == 0) {
                 damageAndMessage(SMALL_ATTACK, "Ninja Won!", main_PB_spiderman);
                 main_TXT_NinjaText.setText("Punch!");
             }
-            if(chooseAttack == 1) {
+            if (chooseAttack == 1) {
                 damageAndMessage(MEDIUM_ATTACK, "Ninja Won!", main_PB_spiderman);
                 main_TXT_NinjaText.setText("Kick!");
             }
-            if(chooseAttack == 2) {
+            if (chooseAttack == 2) {
                 damageAndMessage(LARGE_ATTACK, "Ninja Won!", main_PB_spiderman);
                 main_TXT_NinjaText.setText("Star!");
             }
@@ -364,8 +370,7 @@ public class MainActivity extends AppCompatActivity {
         updateProgressBar();
     }
 
-    public Location getLocation() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+    public void getLocation(final boolean ninjaWon) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -374,15 +379,37 @@ public class MainActivity extends AppCompatActivity {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return null;
+            return;
         }
-        Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (myLocation == null)
-        {
-            myLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (ninjaWon)
+                    saveWinner("Ninja", ninjaCounterMoves, location);
+                else
+                    saveWinner("SpiderMan", spiderManCounterMoves, location);
 
-        }
-        return myLocation;
+                Toast.makeText(MainActivity.this, "location saved",Toast.LENGTH_LONG).show();
+            }
+        });
+//        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            return null;
+//        }
+//        Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//        if (myLocation == null)
+//        {
+//            myLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+//
+//        }
+//        return myLocation;
     }
 
     private void findView() {
@@ -415,5 +442,8 @@ public class MainActivity extends AppCompatActivity {
 
         //------------------- Button for result -------------------------//
         main_BTN_result = findViewById(R.id.MainActivity_Btn_result);
+
+        //------------------- For GPS Location -------------------------//
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
 }

@@ -70,10 +70,10 @@ public class Fragment_List extends Fragment {
                 // TODO: 13/09/2020 pass location from list fragment to map fragment
                 Bundle result = new Bundle();
                 Gson gson = new Gson();
-                String json = gson.toJson(winnerArrayList.get(position).getLocation());
-                result.putString("location",json);
+                result.putDouble("locationLat",winnerArrayList.get(position).getLocationLat());
+                result.putDouble("locationLng",winnerArrayList.get(position).getLocationLng());
                 FragmentManager fragmentManager = getParentFragmentManager();
-               // fragmentManager.setFragmentResult("location",result);
+                fragmentManager.setFragmentResult("location",result);
             }
         });
     }
@@ -90,7 +90,9 @@ public class Fragment_List extends Fragment {
 
     private ArrayList<Winner> sortForTop10(ArrayList<Winner> winnerArrayList) {
         Collections.sort(winnerArrayList);
-        return new ArrayList<Winner>(winnerArrayList.subList(0,10));
+        if(winnerArrayList.size()>10)
+            return new ArrayList<Winner>(winnerArrayList.subList(0,10));
+        return winnerArrayList;
     }
 
     private void findView(View view, ArrayList<Winner> winnerArrayList) {

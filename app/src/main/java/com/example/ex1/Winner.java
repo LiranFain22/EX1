@@ -5,7 +5,8 @@ import android.location.Location;
 public class Winner implements Comparable<Winner>{
     private String name;
     private int counterMoves;
-    private Location location;
+    private double locationLat;
+    private double locationLng;
 
     public  Winner() {
 
@@ -14,7 +15,8 @@ public class Winner implements Comparable<Winner>{
     public Winner(String name, int counterMoves, Location location) {
         this.name = name;
         this.counterMoves = counterMoves;
-        this.location = location;
+        this.locationLat = location.getLatitude();
+        this.locationLng = location.getLongitude();
     }
 
     public String getName() {
@@ -25,8 +27,12 @@ public class Winner implements Comparable<Winner>{
         return counterMoves;
     }
 
-    public Location getLocation() {
-        return location;
+    public double getLocationLat() {
+        return locationLat;
+    }
+
+    public double getLocationLng() {
+        return locationLng;
     }
 
     @Override

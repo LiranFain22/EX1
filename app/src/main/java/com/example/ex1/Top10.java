@@ -51,7 +51,6 @@ public class Top10 extends AppCompatActivity {
                 if(tag.equals("menu")){
                     Intent i = new Intent(getApplicationContext(),Start_Activity.class);
                     startActivity(i);
-                    finish();
                 }
             }
         };
