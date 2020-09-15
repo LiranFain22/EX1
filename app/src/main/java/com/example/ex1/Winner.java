@@ -8,9 +8,7 @@ public class Winner implements Comparable<Winner>{
     private double locationLat;
     private double locationLng;
 
-    public  Winner() {
-
-    };
+    public  Winner() { };
 
     public Winner(String name, int counterMoves, Location location) {
         this.name = name;

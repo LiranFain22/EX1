@@ -67,7 +67,6 @@ public class Fragment_List extends Fragment {
         rAdapter.setOnWinnerClickListener(new WinnerAdapter.OnWinnerClickListener() {
             @Override
             public void onWinnerClick(int position) {
-                // TODO: 13/09/2020 pass location from list fragment to map fragment
                 Bundle result = new Bundle();
                 Gson gson = new Gson();
                 result.putDouble("locationLat",winnerArrayList.get(position).getLocationLat());

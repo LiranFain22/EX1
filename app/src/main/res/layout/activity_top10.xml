@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:text="menu"
             android:tag="menu"
+            android:textColor="#FFFFFF"
             android:background="@drawable/button_background_start"/>
 
 

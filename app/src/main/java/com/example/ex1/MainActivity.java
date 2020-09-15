@@ -17,6 +17,7 @@ import android.os.Handler;
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
 
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,9 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
@@ -85,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
+    private  Location currentLocation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +106,29 @@ public class MainActivity extends AppCompatActivity {
         setButtons();
 
 
+        initLocationListener();
+
+
     }
 
+    private void initLocationListener() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                currentLocation = location;
+            }
+        });
+    }
 
 
     /**
@@ -381,35 +408,49 @@ public class MainActivity extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+        LocationCallback locationCallback;
+        LocationRequest locationRequest = createLocationRequest();
+        locationCallback = new LocationCallback() {
             @Override
-            public void onSuccess(Location location) {
-                if (ninjaWon)
-                    saveWinner("Ninja", ninjaCounterMoves, location);
-                else
-                    saveWinner("SpiderMan", spiderManCounterMoves, location);
+            public void onLocationResult(LocationResult locationResult) {
+                boolean locationChanged = false;
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    if(location != currentLocation ) {
+                        locationChanged = true;
+                        currentLocation = location;
+                        if (ninjaWon)
+                            saveWinner("Ninja", ninjaCounterMoves, location);
+                        else
+                            saveWinner("SpiderMan", spiderManCounterMoves, location);
 
-                Toast.makeText(MainActivity.this, "location saved",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "location saved", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                }
+                if(!locationChanged) {
+                    if (ninjaWon)
+                        saveWinner("Ninja", ninjaCounterMoves, currentLocation);
+                    else
+                        saveWinner("SpiderMan", spiderManCounterMoves, currentLocation);
+                }
+                fusedLocationProviderClient.removeLocationUpdates(this);
             }
-        });
-//        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return null;
-//        }
-//        Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//        if (myLocation == null)
-//        {
-//            myLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-//
-//        }
-//        return myLocation;
+        };
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest,
+                locationCallback,
+                Looper.getMainLooper());
+    }
+
+    protected LocationRequest createLocationRequest() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        return locationRequest;
     }
 
     private void findView() {
